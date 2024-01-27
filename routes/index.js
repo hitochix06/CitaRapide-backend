@@ -3,6 +3,17 @@ var router = express.Router();
 
 const Citation = require("../models/citations");
 
+router.get('/citations', async (req, res) => {
+  try {
+    const citations = await Citation.find({});
+    res.json(citations);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+
 router.get("/v1/quotes/:category", (req, res) => {
 
 
@@ -25,5 +36,9 @@ router.get("/v1/quotes/:category", (req, res) => {
       });
     });
 });
+
+
+
+
 
 module.exports = router;
