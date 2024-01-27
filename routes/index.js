@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var fetch = require('node-fetch'); // Ajoutez cette ligne
 
 const Citation = require("../models/citations");
 
