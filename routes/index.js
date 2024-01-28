@@ -3,6 +3,7 @@ var router = express.Router();
 
 const Citation = require("../models/citations");
 
+// afficher toutes les citations
 router.get('/citations', async (req, res) => {
   try {
     const citations = await Citation.find({});
