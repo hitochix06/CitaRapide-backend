@@ -1,7 +1,5 @@
 require('dotenv').config()
 require('./models/connection');
-const citationsRouter = require('./models/citations');
-const citationRouter = require('./routes/citation');
 
 
 var express = require('express');
@@ -24,8 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Ajout des routes
 app.use('/', indexRouter);
-app.use('/citations', citationsRouter);
-app.use('/citation', citationRouter);
+
 
 
 
