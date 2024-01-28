@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const citation = require("../models/citations");
+
 // afficher toutes les citations
 router.get('/citations', async (req, res) => {
   try {

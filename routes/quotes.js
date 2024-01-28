@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-
+const citation = require("../models/citations");
 
 // afficher toutes les citations
 router.get('/citations', async (req, res) => {
@@ -64,14 +64,14 @@ router.put('/citations/:id', async (req, res) => {
 
 
 
-// function deleteCitation(id) {
-//  citation.deleteOne({ _id: id }).then(() => {
-//   citation.find().then(data => {
-//    console.log(data);
-//   });
-//  });
-// }
+function deleteCitation(id) {
+ citation.deleteOne({ _id: id }).then(() => {
+  citation.find().then(data => {
+   console.log(data);
+  });
+ });
+}
 
-// deleteCitation('65b3da9bfd65a86b76f7a352')
+deleteCitation('65b3e2cd5fa3bd4d9329ae7f')
 
 module.exports = router;
