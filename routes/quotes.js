@@ -13,23 +13,23 @@ router.get('/citations', async (req, res) => {
  }
 });
 
-// supprimer une citation
+// supprimer une citation par son id
 router.delete('/citations/:id', async (req, res) => {
- try {
-  const result = await citation.deleteOne({ _id: req.params.id });
-  if (result.deletedCount > 0) {
-   // Après la suppression, récupérez toutes les citations restantes
-   const allCitations = await citation.find({});
-   console.log(allCitations);
-   res.json({ message: 'Citation supprimée avec succès', citations: allCitations });
-  } else {
-   res.status(404).send('Citation non trouvée');
-  }
- } catch (err) {
-  console.log(err);
-  res.status(500).send(err);
- }
-});
+    try {
+     const result = await citation.deleteOne({ _id: req.params.id });
+     if (result.deletedCount > 0) {
+      // Après la suppression, récupérez toutes les citations restantes
+      const allCitations = await citation.find({});
+      console.log(allCitations);
+      res.json({ message: 'Citation supprimée avec succès', citations: allCitations });
+     } else {
+      res.status(404).send('Citation non trouvée');
+     }
+    } catch (err) {
+     console.log(err);
+     res.status(500).send(err);
+    }
+   });
 
 
 // obtenir une citation spécifique par son id
@@ -64,14 +64,14 @@ router.put('/citations/:id', async (req, res) => {
 
 
 
-function deleteCitation(id) {
- citation.deleteOne({ _id: id }).then(() => {
-  citation.find().then(data => {
-   console.log(data);
-  });
- });
-}
+// function deleteCitation(id) {
+//  citation.deleteOne({ _id: id }).then(() => {
+//   citation.find().then(data => {
+//    console.log(data);
+//   });
+//  });
+// }
 
-deleteCitation('65b3e2cd5fa3bd4d9329ae7f')
+// deleteCitation('65b3e2cd5fa3bd4d9329ae7f')
 
 module.exports = router;
