@@ -13,6 +13,26 @@ router.get('/citations', async (req, res) => {
   }
 });
 
+
+// supprimer une citation par son id
+router.delete('/citations/:id', async (req, res) => {
+  try {
+    const result = await citation.deleteOne({ _id: req.params.id });
+    if (result.deletedCount > 0) {
+      // Après la suppression, récupérez toutes les citations restantes
+      const allCitations = await citation.find({});
+      console.log(allCitations);
+      res.json({ message: 'Citation supprimée avec succès', citations: allCitations });
+    } else {
+      res.status(404).send('Citation non trouvée');
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+
 router.get("/v1/quotes/:category", (req, res) => {
   fetch(`https://api.api-ninjas.com/v1/quotes?category=${req.params.category}`, {
     headers: {
