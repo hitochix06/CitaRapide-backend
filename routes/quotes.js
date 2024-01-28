@@ -29,14 +29,18 @@ router.get('/citations', async (req, res) => {
 
 // supprimer une citation
 router.delete('/citations/:id', async (req, res) => {
- try {
-  const citation = await citation.findByIdAndDelete(req.params.id);
-  res.json(citation);
- } catch (err) {
-  console.log(err);
-  res.status(500).send(err);
- }
-});
+  try {
+   const result = await citation.deleteOne({ _id: req.params.id });
+   if (result.deletedCount > 0) {
+     res.json({ message: 'Citation supprimée avec succès' });
+   } else {
+     res.status(404).send('Citation non trouvée');
+   }
+  } catch (err) {
+   console.log(err);
+   res.status(500).send(err);
+  }
+ });
 
 
 
