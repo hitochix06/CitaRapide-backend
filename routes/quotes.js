@@ -2,6 +2,20 @@ var express = require("express");
 var router = express.Router();
 var citation = require('../models/citation'); // Assurez-vous d'avoir un modèle de citation
 
+
+// ajouter une citation
+router.post('/citations', async (req, res) => {
+  try {
+   const citation = new citation(req.body);
+   const result = await citation.save();
+   res.json(result);
+  } catch (err) {
+   console.log(err);
+   res.status(500).send(err);
+  }
+ });
+
+
 // afficher toutes les citations
 router.get('/citations', async (req, res) => {
  try {
@@ -59,11 +73,11 @@ router.put('/citations/:id', async (req, res) => {
 
 
 function deleteCitation(id) {
-  Citation.deleteOne({ _id: id }).then(() => {
-    Citation.find().then(data => {
-      console.log(data);
-    });
+ citation.deleteOne({ _id: id }).then(() => {
+  citation.find().then(data => {
+   console.log(data);
   });
+ });
 }
 
 deleteCitation('65b3da9bfd65a86b76f7a352')
