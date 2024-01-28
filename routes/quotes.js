@@ -76,14 +76,14 @@ router.put('/citations/:id', async (req, res) => {
 
 
 
-function deleteCitation(id) {
- citation.deleteOne({ _id: id }).then(() => {
-  citation.find().then(data => {
-   console.log(data);
-  });
- });
-}
+// function deleteCitation(id) {
+//  citation.deleteOne({ _id: id }).then(() => {
+//   citation.find().then(data => {
+//    console.log(data);
+//   });
+//  });
+// }
 
-deleteCitation('65b3da9bfd65a86b76f7a352')
+// deleteCitation('65b3da9bfd65a86b76f7a352')
 
 module.exports = router;
