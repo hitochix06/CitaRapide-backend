@@ -1,10 +1,11 @@
 var express = require("express");
 var router = express.Router();
+var citation = require('../models/citation'); // Assurez-vous d'avoir un modèle de citation
 
 // afficher toutes les citations
 router.get('/citations', async (req, res) => {
  try {
-  const citations = await Citation.find({});
+  const citations = await citation.find({});
   res.json(citations);
  } catch (err) {
   console.log(err);
@@ -15,7 +16,7 @@ router.get('/citations', async (req, res) => {
 // supprimer une citation
 router.delete('/citations/:id', async (req, res) => {
  try {
-  const citation = await Citation.findByIdAndDelete(req.params.id);
+  const citation = await citation.findByIdAndDelete(req.params.id);
   res.json(citation);
  } catch (err) {
   console.log(err);
@@ -23,10 +24,12 @@ router.delete('/citations/:id', async (req, res) => {
  }
 });
 
+
+
 // obtenir une citation spécifique par son id
 router.get('/citations/:id', async (req, res) => {
  try {
-  const citation = await Citation.findById(req.params.id);
+  const citation = await citation.findById(req.params.id);
   if (citation) {
    res.json(citation);
   } else {
@@ -41,7 +44,7 @@ router.get('/citations/:id', async (req, res) => {
 // mettre à jour une citation spécifique par son id
 router.put('/citations/:id', async (req, res) => {
  try {
-  const citation = await Citation.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  const citation = await citation.findByIdAndUpdate(req.params.id, req.body, { new: true });
   if (citation) {
    res.json(citation);
   } else {
@@ -52,5 +55,17 @@ router.put('/citations/:id', async (req, res) => {
   res.status(500).send(err);
  }
 });
+
+
+
+function deleteCitation(id) {
+  Citation.deleteOne({ _id: id }).then(() => {
+    Citation.find().then(data => {
+      console.log(data);
+    });
+  });
+}
+
+deleteCitation('65b3da9bfd65a86b76f7a352')
 
 module.exports = router;
