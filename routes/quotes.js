@@ -5,15 +5,15 @@ var citation = require('../models/citation'); // Assurez-vous d'avoir un modèle
 
 // ajouter une citation
 router.post('/citations', async (req, res) => {
-  try {
-   const citation = new citation(req.body);
-   const result = await citation.save();
-   res.json(result);
-  } catch (err) {
-   console.log(err);
-   res.status(500).send(err);
-  }
- });
+ try {
+  const citation = new citation(req.body);
+  const result = await citation.save();
+  res.json(result);
+ } catch (err) {
+  console.log(err);
+  res.status(500).send(err);
+ }
+});
 
 
 // afficher toutes les citations
@@ -29,19 +29,21 @@ router.get('/citations', async (req, res) => {
 
 // supprimer une citation
 router.delete('/citations/:id', async (req, res) => {
-  try {
-   const result = await citation.deleteOne({ _id: req.params.id });
-   if (result.deletedCount > 0) {
-     res.json({ message: 'Citation supprimée avec succès' });
-   } else {
-     res.status(404).send('Citation non trouvée');
-   }
-  } catch (err) {
-   console.log(err);
-   res.status(500).send(err);
+ try {
+  const result = await citation.deleteOne({ _id: req.params.id });
+  if (result.deletedCount > 0) {
+   // Après la suppression, récupérez toutes les citations restantes
+   const allCitations = await citation.find({});
+   console.log(allCitations);
+   res.json({ message: 'Citation supprimée avec succès', citations: allCitations });
+  } else {
+   res.status(404).send('Citation non trouvée');
   }
- });
-
+ } catch (err) {
+  console.log(err);
+  res.status(500).send(err);
+ }
+});
 
 
 // obtenir une citation spécifique par son id
