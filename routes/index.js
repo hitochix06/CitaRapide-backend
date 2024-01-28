@@ -1,8 +1,17 @@
 var express = require("express");
 var router = express.Router();
 
-const Citation = require("../models/citations");
-
+const citation = require("../models/citations");
+// afficher toutes les citations
+router.get('/citations', async (req, res) => {
+  try {
+    const citations = await citation.find({});
+    res.json(citations);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
 
 router.get("/v1/quotes/:category", (req, res) => {
   fetch(`https://api.api-ninjas.com/v1/quotes?category=${req.params.category}`, {
