@@ -1,8 +1,17 @@
 var express = require("express");
 var router = express.Router();
 
-
 const Citation = require("../models/citations");
+
+// function deleteCitation(id) {
+//   Citation.deleteOne({ _id: id }).then(() => {
+//     Citation.find().then(data => {
+//       console.log(data);
+//     });
+//   });
+// }
+
+// deleteCitation('65b3da9bfd65a86b76f7a352')
 
 router.get("/v1/quotes/:category", (req, res) => {
   fetch(`https://api.api-ninjas.com/v1/quotes?category=${req.params.category}`, {
