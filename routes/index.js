@@ -14,10 +14,18 @@ router.get('/citations', async (req, res) => {
   }
 });
 
+// supprimer une citation
+router.delete('/citations/:id', async (req, res) => {
+  try {
+    const citation = await Citation.findByIdAndDelete(req.params.id);
+    res.json(citation);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
 
 router.get("/v1/quotes/:category", (req, res) => {
-
-
   fetch(`https://api.api-ninjas.com/v1/quotes?category=${req.params.category}`, {
     headers: {
       "X-Api-Key": process.env.VITE_APP_API_KEY
