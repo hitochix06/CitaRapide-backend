@@ -1,19 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var citation = require('../models/citation'); // Assurez-vous d'avoir un modèle de citation
 
 
-// ajouter une citation
-router.post('/citations', async (req, res) => {
- try {
-  const citation = new citation(req.body);
-  const result = await citation.save();
-  res.json(result);
- } catch (err) {
-  console.log(err);
-  res.status(500).send(err);
- }
-});
 
 
 // afficher toutes les citations
