@@ -9,7 +9,6 @@ var logger = require('morgan');
 
 
 var indexRouter = require('./routes/index');
-var quotesRouter = require('./routes/quotes');
 
 
 var app = express();
@@ -24,7 +23,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Ajout des routes
 app.use('/', indexRouter);
-app.use('/quotes', quotesRouter);
 
 
 
