@@ -3,38 +3,41 @@ var router = express.Router();
 const citation = require("../models/citations");
 
 // afficher toutes les citations
-router.get('/citations', async (req, res) => {
-  try {
-    const citations = await citation.find({});
-    res.json(citations);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
+router.get('/citations', (req, res) => {
+  citation.find({})
+    .then(citations => {
+      res.json(citations);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 });
 
-
 // supprimer une citation par son id
-router.delete('/citations/:id', async (req, res) => {
+router.delete('/citations/:id', (req, res) => {
   console.log('ID reçu pour suppression:', req.params.id); // Ajout d'un log pour déboguer
   if (!req.params.id) {
     return res.status(400).send('Aucun identifiant fourni');
   }
 
-  try {
-    const result = await citation.deleteOne({ _id: req.params.id });
-    if (result.deletedCount > 0) {
-      // Après la suppression, récupérez toutes les citations restantes
-      const allCitations = await citation.find({});
-      console.log(allCitations);
-      res.json({ message: 'Citation supprimée avec succès', citations: allCitations });
-    } else {
-      res.status(404).send('Citation non trouvée');
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
+  citation.deleteOne({ _id: req.params.id })
+    .then(result => {
+      if (result.deletedCount > 0) {
+        // Après la suppression, récupérez toutes les citations restantes
+        citation.find({})
+          .then(allCitations => {
+            console.log(allCitations);
+            res.json({ message: 'Citation supprimée avec succès', citations: allCitations });
+          });
+      } else {
+        res.status(404).send('Citation non trouvée');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 });
 
 router.get("/v1/quotes/:category", (req, res) => {
