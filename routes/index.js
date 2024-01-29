@@ -16,6 +16,11 @@ router.get('/citations', async (req, res) => {
 
 // supprimer une citation par son id
 router.delete('/citations/:id', async (req, res) => {
+  console.log('ID reçu pour suppression:', req.params.id); // Ajout d'un log pour déboguer
+  if (!req.params.id) {
+    return res.status(400).send('Aucun identifiant fourni');
+  }
+
   try {
     const result = await citation.deleteOne({ _id: req.params.id });
     if (result.deletedCount > 0) {
@@ -31,7 +36,6 @@ router.delete('/citations/:id', async (req, res) => {
     res.status(500).send(err);
   }
 });
-
 
 router.get("/v1/quotes/:category", (req, res) => {
   fetch(`https://api.api-ninjas.com/v1/quotes?category=${req.params.category}`, {
