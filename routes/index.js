@@ -49,7 +49,7 @@ router.get("/v1/quotes/:category", (req, res) => {
     .then(response => response.json())
     .then(apiData => {
 
-      const newCita = new Citation({
+      const newCita = new citation({
         proverbe: apiData[0].quote,
         auteur: apiData[0].author,
         theme: apiData[0].category,
