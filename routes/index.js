@@ -40,6 +40,7 @@ router.delete('/citations/:id', (req, res) => {
     });
 });
 
+// api pour ajouter une citation
 router.get("/v1/quotes/:category", (req, res) => {
   fetch(`https://api.api-ninjas.com/v1/quotes?category=${req.params.category}`, {
     headers: {
